@@ -1,99 +1,45 @@
+# HD Wallet Ethereum Address Derivation
 
-**HD Wallet**
-================
+This Python script provides functionality to derive Ethereum addresses from an extended public key (xpub) using Hierarchical Deterministic (HD) wallet principles.
 
-A Python implementation of a Hierarchical Deterministic (HD) wallet for Ethereum.
+## Motivation
 
-**Usage**
---------
+While there are existing libraries for HD wallet operations, I couldn't find a fast, lightweight solution specifically for deriving Ethereum addresses from an xpub. This script aims to fill that gap, providing a simple and efficient way to generate Ethereum addresses from a given xpub and derivation path.
 
-### Importing the Module
+## Features
 
-To use the HD wallet, simply import the module:
-```python
-import hdwallet
-```
-### Creating an HD Wallet
+- Decode base58-encoded xpub
+- Derive child public keys from parent public keys and chain codes
+- Generate Ethereum addresses from derived public keys
+- Support for custom derivation paths
 
-Create an instance of the `HDWallet` class, specifying the symbol of the cryptocurrency (e.g., "ETH" for Ethereum):
-```python
-wallet = HDWallet(symbol="ETH")
-```
-### Deriving an HD Wallet from an Extended Public Key
+## Usage
 
-Derive an HD wallet from an extended public key (xpub) using the `from_xpublic_key` method:
 ```python
 xpub = "xpub6CqGnXKKteadngNJV3YFVCawwJL2nzBkRj7VYZRSAsLpdmLZ4WnRKhqYZaXbqDtWqqAdyuQCMnV2ECgzRFMNiskHscRg51XN5iVzMvgRtdt"
-wallet.from_xpublic_key(xpub)
-```
-### Deriving a Child Wallet
+path = "m/0/1/1/0"
 
-Derive a child wallet from the current wallet using the `derive_path` method, specifying the derivation path (e.g., "m/0/1/1/0"):
-```python
-derived_wallet = wallet.derive_path("m/0/1/1/0")
-```
-### Getting the P2PKH Address
-
-Get the P2PKH address of the derived wallet using the `p2pkh_address` method:
-```python
-ethereum_address = derived_wallet.p2pkh_address()
+wallet = HDWallet(xpub)
+derived_wallet = wallet.derive_path(path)
+ethereum_address = derived_wallet.eth_address()
 print(f"Derived Ethereum address: {ethereum_address}")
 ```
-### Debugging Information
 
-Get debugging information about the wallet using the `debug_info` method:
-```python
-wallet.debug_info()
-```
-**Functions**
---------------
+## Dependencies
 
-### `sha256(data)`
+- `hashlib`
+- `hmac`
+- `ecdsa`
+- `eth_utils`
 
-Compute the SHA-256 hash of the input data.
+## Credits
 
-### `ripemd160(data)`
+This implementation was inspired by and references concepts from the following libraries:
 
-Compute the RIPEMD-160 hash of the input data.
+- [pycoin](https://github.com/richardkiss/pycoin)
+- [hdwallet](https://github.com/meherett/python-hdwallet)
+- [ethers](https://github.com/ethers-io/ethers.py)
 
-### `b58encode(v)`
+## License
 
-Encode the input data using Base58.
-
-### `b58decode(s)`
-
-Decode the input Base58 string.
-
-### `b58decode_check(s)`
-
-Decode the input Base58 string and verify the checksum.
-
-### `derive_child_public_key(parent_public_key, parent_chain_code, index)`
-
-Derive a child public key from the parent public key and chain code using the specified index.
-
-### `checksum_encode(address)`
-
-Encode the input address with a checksum.
-
-**Classes**
----------
-
-### `HDWallet`
-
-The HD wallet class, which represents a hierarchical deterministic wallet.
-
-**Constants**
-------------
-
-### `BASE58_ALPHABET`
-
-The Base58 alphabet used for encoding and decoding.
-
-**Dependencies**
---------------
-
-* `hashlib` for cryptographic hash functions
-* `hmac` for keyed-hash message authentication
-* `ecdsa` for elliptic curve digital signatures
-* `eth_utils` for Ethereum-specific utility functions
+TBD
