@@ -1,7 +1,8 @@
 import hashlib
 import hmac
 import ecdsa
-from eth_utils import keccak
+# from eth_utils import keccak
+from keccak import keccak256
 
 BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 
@@ -32,7 +33,7 @@ def derive_child_public_key(parent_public_key, parent_chain_code, index):
 
 def checksum_encode(address):
     address = address.lower().replace("0x", "")
-    keccak_hash = keccak(bytes(address, encoding='utf-8')).hex()
+    keccak_hash = keccak256(bytes(address, encoding='utf-8')).hex()
     return "0x" + ''.join(c.upper() if int(keccak_hash[i], 16) >= 8 else c for i, c in enumerate(address))
 
 class HDWallet:
@@ -52,7 +53,7 @@ class HDWallet:
 
     def eth_address(self):
         uncompressed = ecdsa.VerifyingKey.from_string(self.public_key, curve=ecdsa.SECP256k1).to_string("uncompressed")[1:]
-        address = keccak(uncompressed)[-20:].hex()
+        address = keccak256(uncompressed)[-20:].hex()
         return checksum_encode(address)
 
 if __name__ == "__main__":
