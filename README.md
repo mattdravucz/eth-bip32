@@ -7,7 +7,7 @@ eth-bip32 is a Python package for deriving Ethereum addresses from HD wallets us
 You can install eth-bip32 using pip:
 
 ```
-pip install eth-bip32
+pip install eth_bip32
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ pip install eth-bip32
 Here's a basic example of how to use eth-bip32:
 
 ```python
-from eth-bip32 import HDWallet
+from eth_bip32 import HDWallet
 
 xpub = "xpub6CqGnXKKteadngNJV3YFVCawwJL2nzBkRj7VYZRSAsLpdmLZ4WnRKhqYZaXbqDtWqqAdyuQCMnV2ECgzRFMNiskHscRg51XN5iVzMvgRtdt"
 path = "m/0/1/1/0"
@@ -25,6 +25,21 @@ derived_wallet = wallet.from_path(path)
 ethereum_address = derived_wallet.address()
 print(f"Derived Ethereum address: {ethereum_address}")
 ```
+
+## Local build
+
+```
+pip install .
+```
+
+
+## Test
+
+```
+python -m unittest discover -v tests
+```
+
+
 
 ## License
 

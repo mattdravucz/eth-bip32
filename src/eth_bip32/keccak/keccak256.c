@@ -24,6 +24,9 @@
 #include <string.h>
 #include <stdint.h>
 
+#define PY_SSIZE_T_CLEAN
+#include <Python.h>
+
 #define BLOCK_SIZE     ((1600 - 256 * 2) / 8)
 
 #define I64(x) x##LL
@@ -241,4 +244,19 @@ void keccak_final(SHA3_CTX *ctx, unsigned char* result)
     if (result) {
          me64_to_le_str(result, ctx->hash, digest_length);
     }
+}
+
+
+static struct PyModuleDef keccak256module = {
+    PyModuleDef_HEAD_INIT,
+    "_keccak256",
+    NULL,
+    -1,
+    NULL
+};
+
+PyMODINIT_FUNC
+PyInit__keccak256(void)
+{
+    return PyModule_Create(&keccak256module);
 }
