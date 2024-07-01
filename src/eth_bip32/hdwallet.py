@@ -1,8 +1,8 @@
 import hashlib
 import hmac
 import ecdsa
-# from eth_utils import keccak
-from keccak import keccak256
+from eth_bip32.keccak.keccak import keccak256
+
 
 BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 
@@ -43,7 +43,7 @@ class HDWallet:
         self.public_key = data[45:]
         self.path = None
 
-    def derive_path(self, path):
+    def from_path(self, path):
         indices = [int(i) for i in path.split('/') if i.isnumeric()]
         derived = self
         derived.path = path.rstrip('/')
@@ -51,16 +51,7 @@ class HDWallet:
             derived.public_key, derived.chain_code = derive_child_public_key(derived.public_key, derived.chain_code, index)
         return derived
 
-    def eth_address(self):
+    def address(self):
         uncompressed = ecdsa.VerifyingKey.from_string(self.public_key, curve=ecdsa.SECP256k1).to_string("uncompressed")[1:]
         address = keccak256(uncompressed)[-20:].hex()
         return checksum_encode(address)
-
-if __name__ == "__main__":
-    xpub = "xpub6CqGnXKKteadngNJV3YFVCawwJL2nzBkRj7VYZRSAsLpdmLZ4WnRKhqYZaXbqDtWqqAdyuQCMnV2ECgzRFMNiskHscRg51XN5iVzMvgRtdt"
-    path = "m/0/1/1/0"
-    
-    wallet = HDWallet(xpub)
-    derived_wallet = wallet.derive_path(path)
-    ethereum_address = derived_wallet.eth_address()
-    print(f"Derived Ethereum address: {ethereum_address}")

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eth_bip32"
+version = "0.1.0"
+description = "Ethereum BIP32 HD Wallet implementation"
+authors = [{name = "Your Name", email = "your.email@example.com"}]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "ecdsa",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/eth-bip32"
+Repository = "https://github.com/yourusername/eth-bip32.git"
+
+[tool.setuptools]
+packages = ["eth_bip32", "eth_bip32.keccak"]
+package-dir = {"" = "src"}

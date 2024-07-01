@@ -1,36 +1,38 @@
-# HD Wallet Ethereum Address Derivation
+# eth-bip32
 
-This Python script provides functionality to derive Ethereum addresses from an extended public key (xpub) using Hierarchical Deterministic (HD) wallet principles.
+eth-bip32 is a Python package for deriving Ethereum addresses from HD wallets using extended public keys (xpub).
 
-## Motivation
+## Installation
 
-While there are existing libraries for HD wallet operations, I couldn't find a fast, lightweight solution specifically for deriving Ethereum addresses from an xpub. This script aims to fill that gap, providing a simple and efficient way to generate Ethereum addresses from a given xpub and derivation path.
+You can install eth-bip32 using pip:
 
-## Features
-
-- Decode base58-encoded xpub
-- Derive child public keys from parent public keys and chain codes
-- Generate Ethereum addresses from derived public keys
-- Support for custom derivation paths
+```
+pip install eth-bip32
+```
 
 ## Usage
 
+Here's a basic example of how to use eth-bip32:
+
 ```python
+from eth-bip32 import HDWallet
+
 xpub = "xpub6CqGnXKKteadngNJV3YFVCawwJL2nzBkRj7VYZRSAsLpdmLZ4WnRKhqYZaXbqDtWqqAdyuQCMnV2ECgzRFMNiskHscRg51XN5iVzMvgRtdt"
 path = "m/0/1/1/0"
 
 wallet = HDWallet(xpub)
-derived_wallet = wallet.derive_path(path)
-ethereum_address = derived_wallet.eth_address()
+derived_wallet = wallet.from_path(path)
+ethereum_address = derived_wallet.address()
 print(f"Derived Ethereum address: {ethereum_address}")
 ```
 
-## Dependencies
+## License
 
-- `hashlib`
-- `hmac`
+This project is licensed under the MIT License.
+
+## Dependencies
 - `ecdsa`
-- `eth_utils`
+
 
 ## Credits
 
@@ -39,7 +41,3 @@ This implementation was inspired by and references concepts from the following l
 - [pycoin](https://github.com/richardkiss/pycoin)
 - [hdwallet](https://github.com/meherett/python-hdwallet)
 - [ethers](https://github.com/ethers-io/ethers.py)
-
-## License
-
-TBD
