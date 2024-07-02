@@ -1,7 +1,8 @@
 import hashlib
 import hmac
 import ecdsa
-from eth_bip32.keccak.keccak import keccak256
+
+from eth_bip32.keccak._keccak256 import keccak256
 
 
 BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
