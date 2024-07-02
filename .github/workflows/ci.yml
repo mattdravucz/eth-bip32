@@ -23,5 +23,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install .
 
+    - name: Debug info
+      run: |
+        python -c "import site; print(site.getsitepackages())"
+        dir $PYTHON/lib/site-packages/eth_bip32 /s
+      shell: cmd
+
     - name: Run tests
       run: python -m unittest discover -v tests

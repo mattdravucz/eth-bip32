@@ -4,25 +4,28 @@ import sys
 import glob
 
 def find_library():
-    # Get the directory of the current file
     current_dir = os.path.dirname(__file__)
-    
-    # Look for any file starting with '_keccak256' and ending with '.so' or '.pyd'
     pattern = os.path.join(current_dir, '_keccak256*')
     matches = glob.glob(pattern)
     
-    if matches:
-        return matches[0]  # Return the first match
+    print(f"Searching for library in: {current_dir}")
+    print(f"Found matches: {matches}")
     
+    if matches:
+        return matches[0]
     return None
 
 try:
     lib_path = find_library()
+    print(f"Attempting to load library from: {lib_path}")
     if lib_path is None:
         raise ImportError("Cannot find the _keccak256 library.")
     libkeccak256 = ctypes.CDLL(lib_path)
+    print("Library loaded successfully")
 except Exception as e:
     print(f"Error loading _keccak256 library: {e}")
+    print(f"Python version: {sys.version}")
+    print(f"Platform: {sys.platform}")
     raise
 
 class SHA3_CTX(ctypes.Structure):
