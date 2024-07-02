@@ -30,4 +30,3 @@ Issues = "https://github.com/mattdravucz/eth-bip32/issues"
 [tool.setuptools]
 packages = ["eth_bip32", "eth_bip32.keccak"]
 package-dir = {"" = "src"}
-long-description-content-type = "text/markdown"
