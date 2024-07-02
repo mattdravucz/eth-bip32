@@ -10,7 +10,7 @@ keccak256_module = Extension('eth_bip32.keccak._keccak256',
 
 setup(
     name="eth_bip32",
-    version="0.1.0",
+    version="0.1.1",
     description="Deriving Ethereum addresses from HD wallets using extended public keys (xpub)",
     long_description=long_description,
     long_description_content_type='text/markdown',
