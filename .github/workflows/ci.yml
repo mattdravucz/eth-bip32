@@ -34,9 +34,22 @@ jobs:
       if: runner.os == 'Windows'
       shell: cmd
       run: |
-        python -c "import sys; print(sys.version); print(sys.platform); import ctypes; print(f'{ctypes.sizeof(ctypes.c_voidp) * 8}-bit')"
+        echo Python Version:
+        python -c "import sys; print(sys.version)"
+        echo Platform:
+        python -c "import sys; print(sys.platform)"
+        echo Pointer Size:
+        python -c "import ctypes; print(f'{ctypes.sizeof(ctypes.c_voidp) * 8}-bit')"
+        echo Site Packages:
         python -c "import site; print(site.getsitepackages())"
-        dir /s %PYTHONPATH%\Lib\site-packages\eth_bip32
+        set PYTHON_SITE=%PYTHONPATH%\\Lib\\site-packages
+        echo Site Packages Path:
+        echo %PYTHON_SITE%
+        if exist %PYTHON_SITE% (
+          dir /s %PYTHON_SITE%\eth_bip32
+        ) else (
+          echo %PYTHON_SITE% does not exist
+        )
 
     - name: Run tests
       run: python -m unittest discover -v tests
