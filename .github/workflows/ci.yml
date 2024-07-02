@@ -23,11 +23,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install .
 
-    - name: Debug info
+    - name: Debug info (Unix)
+      if: runner.os != 'Windows'
       run: |
+        python -c "import sys; print(sys.version); print(sys.platform); import ctypes; print(f'{ctypes.sizeof(ctypes.c_voidp) * 8}-bit')"
         python -c "import site; print(site.getsitepackages())"
-        dir $PYTHON/lib/site-packages/eth_bip32 /s
+        ls -R $(python -c "import site; print(site.getsitepackages()[0])")/eth_bip32
+
+    - name: Debug info (Windows)
+      if: runner.os == 'Windows'
       shell: cmd
+      run: |
+        python -c "import sys; print(sys.version); print(sys.platform); import ctypes; print(f'{ctypes.sizeof(ctypes.c_voidp) * 8}-bit')"
+        python -c "import site; print(site.getsitepackages())"
+        dir /s %PYTHONPATH%\Lib\site-packages\eth_bip32
 
     - name: Run tests
       run: python -m unittest discover -v tests
